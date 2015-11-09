@@ -16,6 +16,26 @@ function subOne(){
 	document.getElementById("counter").innerHTML = countVal - 1;
 } */
 
+//specify number of counters to add to the page
+var numCounters = 15;
+
+//create counter fragment for HTML
+function create(htmlStr) {
+	var frag = document.createDocumentFragment(),
+		temp = document.createElement('div');
+	temp.innerHTML = htmlStr;
+	while (temp.firstChild) {
+		frag.appendChild(temp.firstChild);
+	}
+	return frag;
+}
+
+for (i = 0; i < numCounters; i++) {
+	id = 'box' + i;
+	str = '<div class="box" id="' + id + '"></div>';
+	var fragment = create(str);
+	document.body.appendChild(fragment);
+}
 
 
 
@@ -71,11 +91,18 @@ var box = function(elem) {
 	}
 };
 
-var elem1 = document.getElementById("box1");
+//add countdown function to counters
+for (i = 0; i < numCounters; i++) {
+	id = 'box' + i;
+	elem = document.getElementById(id);
+	counter = new box(elem);
+}
+
+/* var elem1 = document.getElementById("box1");
 var box1 = new box(elem1);
 
 var elem2 = document.getElementById("box2");
 var box2 = new box(elem2);
 
 var elem3 = document.getElementById("box3");
-var box3 = new box(elem3);
+var box3 = new box(elem3); */
