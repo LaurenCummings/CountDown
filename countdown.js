@@ -17,7 +17,7 @@ function subOne(){
 } */
 
 //specify number of counters to add to the page
-var numCounters = 15;
+var numCounters = 3;
 
 //create counter fragment for HTML
 function create(htmlStr) {
@@ -37,8 +37,6 @@ for (i = 0; i < numCounters; i++) {
 	document.body.appendChild(fragment);
 }
 
-
-
 var box = function(elem) {
 	var counter = createCounter(),
 		count;
@@ -52,6 +50,8 @@ var box = function(elem) {
 	var startCount = setInterval(function(){countDown()}, 1000);
 	
 	var checkZero = setInterval(function(){atZero()}, 1000);	
+	
+	//var checkForCount = setInterval(function(){checkCount()}, 100);
 	
 	//Reset the counter when the box is clicked
 	$(elem).click(function(){
@@ -69,6 +69,9 @@ var box = function(elem) {
 	
 	function render() {
 		counter.innerHTML = count;
+		if (count <= 3) {
+			toggleBgnd(elem);
+		};
 	}
 	
 	function countDown() {
@@ -80,6 +83,7 @@ var box = function(elem) {
 		if (count <= 0) {
 			alert("YOU LOSE!");
 			stop();
+			askNewGame();
 /* 			clearInterval(countDown);
 			clearInterval(checkZero); */
 		}
@@ -89,7 +93,30 @@ var box = function(elem) {
 		clearInterval(startCount);
 		clearInterval(checkZero);
 	}
+	
+	function askNewGame(){
+		var newGame = confirm("Play another game?");
+		if (newGame == true) {
+			alert("You pressed ok!");
+		} else {
+			alert("YOu pressed cancel");
+		}
+	}
+	
+	// function checkCount() {
+		// if (count <= 8) {
+			// setBgrndInterval();
+		// };
+	// }
+	
 };
+
+// function stopAll() {
+	// //alert("ALL STOPPED");
+	// askNewGame();
+// }
+
+
 
 //add countdown function to counters
 for (i = 0; i < numCounters; i++) {
@@ -97,6 +124,18 @@ for (i = 0; i < numCounters; i++) {
 	elem = document.getElementById(id);
 	counter = new box(elem);
 }
+
+//set the interval the background toggles at
+function setBgrndInterval() {
+	var toggleBgnd = setInterval(toggleBgnd, 1000);
+}
+
+//toggle the background color of the counters
+function toggleBgnd(elem) {
+	$(elem).css("background-color", function() {
+		this.switch = !this.switch
+	return this.switch ? "red" : "white"})
+};
 
 /* var elem1 = document.getElementById("box1");
 var box1 = new box(elem1);
